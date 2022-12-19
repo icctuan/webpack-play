@@ -52,6 +52,16 @@ module.exports = {
           },
         ],
       },
+      // 解析css文件
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      // 解析less文件
+      {
+        test: /\.less$/,
+        use: ["style-loader", "css-loader", "less-loader"],
+      },
     ],
   },
   resolve: {

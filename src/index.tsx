@@ -1,8 +1,10 @@
-
-import Test from "./Test";
+import ReactDOM from "react-dom";
+import TestPro from "./TestPro";
 
 const App = () => {
-  return <Test />;
+  return <TestPro />;
 };
+
+ReactDOM.render(<App />, document.getElementById("root"));
 
 export default App;
