@@ -1,0 +1,1 @@
+console.log((()=>{console.log("he name is","aobam")}));
