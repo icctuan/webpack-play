@@ -1,5 +1,5 @@
 export const fun = () => {
-  const name = "aobam";
-  console.log("he name is", name);
+  const name = "Christmas";
+  console.log("Merry", name);
   return name;
 };
