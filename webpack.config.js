@@ -118,4 +118,18 @@ module.exports = {
       filename: "[name].[contenthash].css",
     }),
   ],
+  devServer: {
+    // 需要修改本地电脑 hosts 文件，对应上本机ip地址，一般是放在C:\Windows\System32\drivers\etc\hosts
+    host: "local.newrank.cn",
+    // 自定义端口
+    port: 7080,
+    // 自动打开浏览器
+    open: true,
+    // 支持 HTTPS
+    https: true,
+    // history 路由
+    historyApiFallback: true,
+    // 热更新
+    hot: true,
+  },
 };
