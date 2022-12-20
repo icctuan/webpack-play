@@ -85,6 +85,23 @@ module.exports = {
           "less-loader",
         ],
       },
+      // 解析图片资源
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        // asset 是 webpack 自带的资源模块
+        type: "asset/resource",
+      },
+      // 字体文件
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
+      // 解析svg 可以作为组件使用和 url 同时使用
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ["@svgr/webpack", "file-loader"],
+      },
     ],
   },
   resolve: {
@@ -99,6 +116,6 @@ module.exports = {
     // css文件单独打包，设置文件命名格式
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
-    })
+    }),
   ],
 };
