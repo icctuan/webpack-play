@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+/** 将css提取到单独的文件 */
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -60,7 +62,28 @@ module.exports = {
       // 解析less文件
       {
         test: /\.less$/,
-        use: ["style-loader", "css-loader", "less-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          // 设置了css module，就必须用模式引入的写法
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                mode: "local",
+              },
+            },
+          },
+          {
+            loader: require.resolve("postcss-loader"),
+            options: {
+              postcssOptions: {
+                // 将css 转换为大多数浏览器可以理解的内容，内置 autoprefixer
+                plugins: [["postcss-preset-env"]],
+              },
+            },
+          },
+          "less-loader",
+        ],
       },
     ],
   },
@@ -73,5 +96,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"),
     }),
+    // css文件单独打包，设置文件命名格式
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    })
   ],
 };
