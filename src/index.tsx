@@ -1,9 +1,11 @@
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import TestPro from "./TestPro";
 import Cookie from "./assets/cookie.png";
 import Christmas, { ReactComponent as Tree } from "./assets/christmas.svg";
 
 const App = () => {
+  console.log(process.env.PUBLIC_URL, process.env.REACT_APP_API_HOST);
+
   return (
     <>
       <TestPro />
@@ -14,6 +16,6 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
 
 export default App;

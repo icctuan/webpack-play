@@ -5,7 +5,7 @@
   "author": "Yanyii <601838356@qq.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack.config.js",
+    "dev": "webpack-dev-server --env REACT_APP_API_HOST=aa --config ./webpack.config.js",
     "build": "webpack"
   },
   "devDependencies": {
