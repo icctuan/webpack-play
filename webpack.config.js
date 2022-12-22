@@ -3,6 +3,12 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 /** 将css提取到单独的文件 */
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+/** 打包体积分析插件 */
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+/** 体积压缩插件 */
+const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = (env) => {
   return {
@@ -18,6 +24,7 @@ module.exports = (env) => {
       rules: [
         {
           test: /\.(js)$/,
+          include: path.resolve(__dirname, "./src"), // 缩小 loader 作用范围
           use: [
             {
               loader: "babel-loader",
@@ -38,7 +45,9 @@ module.exports = (env) => {
         {
           // 匹配对应后缀的文件
           test: /\.(ts|tsx)$/,
+          include: path.resolve(__dirname, "./src"), // 缩小 loader 作用范围
           use: [
+            "thread-loader", // 多进程优化
             {
               loader: "babel-loader",
               options: {
@@ -128,6 +137,8 @@ module.exports = (env) => {
           env.REACT_APP_API_HOST
         ),
       }),
+      // 打包体积分析插件
+      new BundleAnalyzerPlugin(),
     ],
     devServer: {
       // 需要修改本地电脑 hosts 文件，对应上本机ip地址，一般是放在C:\Windows\System32\drivers\etc\hosts
@@ -142,6 +153,17 @@ module.exports = (env) => {
       historyApiFallback: true,
       // 热更新
       hot: true,
+    },
+    // 体积压缩
+    optimization: {
+      minimize: true,
+      // 自定义压缩方式
+      minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+    },
+    // 排除打包第三方库，可以结合使用cdn的方式
+    externals: {
+      react: "React",
+      "react-dom": "ReactDOM",
     },
   };
 };
